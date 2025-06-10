@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, LineChart, Line, PieChart, Pie, Cell } from 'recharts';
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-import { TrendingUp, Calendar, Filter, Download } from 'lucide-react';
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-import { format, subDays } from 'date-fns';
+
+import { TrendingUp, Download } from 'lucide-react';
+
+import { format,  } from 'date-fns';
 
 interface PerformanceAnalyticsProps {
   onClose: () => void;

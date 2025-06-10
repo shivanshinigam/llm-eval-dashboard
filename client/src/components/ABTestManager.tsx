@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { TestTube, Play, Pause, BarChart3, Plus, Edit, Trash2 } from 'lucide-react';
+import { TestTube, Play, Pause, BarChart3, Plus,  Trash2 } from 'lucide-react';
 import { ABTest } from '../types';
 
 interface ABTestManagerProps {

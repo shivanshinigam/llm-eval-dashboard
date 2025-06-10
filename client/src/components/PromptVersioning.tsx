@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { GitBranch, Clock, Star, Plus, Eye, Edit, Archive } from 'lucide-react';
+import { GitBranch, Clock,  Plus, Eye, Edit, Archive } from 'lucide-react';
 import { PromptVersion } from '../types';
 import { format } from 'date-fns';
 

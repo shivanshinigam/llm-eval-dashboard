@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Play, Pause, CheckCircle, XCircle, Clock, GitBranch, Settings } from 'lucide-react';
+import { Play, CheckCircle, XCircle, Clock, GitBranch, Settings } from 'lucide-react';
 
 interface CIPipelineProps {
   onClose: () => void;
