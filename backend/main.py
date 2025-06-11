@@ -6,7 +6,7 @@ from huggingface_hub import InferenceClient
 from transformers import pipeline
 from typing import Dict
 import textstat # type: ignore
-from sentence_transformers import SentenceTransformer, util # type: ignore
+#from sentence_transformers import SentenceTransformer, util # type: ignore
 
 app = FastAPI()
 
@@ -30,9 +30,19 @@ def check_toxicity(text: str):
         return response.json()
     return [{"label": "unknown", "score": 0.0}]
 
+def get_embedding(text: str):
+    url = "https://api-inference.huggingface.co/pipeline/feature-extraction/sentence-transformers/all-MiniLM-L6-v2"
+    headers = {"Authorization": f"Bearer {HF_API_TOKEN}"}
+    response = requests.post(url, headers=headers, json={"inputs": text})
+    return response.json()
+
+def cosine_similarity(a, b):
+    import numpy as np
+    a, b = np.array(a), np.array(b)
+    return np.dot(a, b) / (np.linalg.norm(a) * np.linalg.norm(b))
 
 # Initialize SentenceTransformer for semantic similarity
-embedder = SentenceTransformer('all-MiniLM-L6-v2')
+#embedder = SentenceTransformer('all-MiniLM-L6-v2')
 
 # Request models
 class PromptRequest(BaseModel):
@@ -143,9 +153,11 @@ async def evaluate_correctness(req: CorrectnessRequest):
         if not reference:
             results[model_name] = None
             continue
-        emb1 = embedder.encode(text, convert_to_tensor=True)
-        emb2 = embedder.encode(reference, convert_to_tensor=True)
-        similarity = util.pytorch_cos_sim(emb1, emb2).item()
+        emb1 = get_embedding(text)
+        emb2 = get_embedding(reference)
+        similarity = cosine_similarity(emb1[0], emb2[0])
+
+
         results[model_name] = similarity
     return results
 
@@ -157,9 +169,10 @@ async def evaluate_hallucination(req: CorrectnessRequest):
         if not reference:
             results[model_name] = None
             continue
-        emb1 = embedder.encode(text, convert_to_tensor=True)
-        emb2 = embedder.encode(reference, convert_to_tensor=True)
-        similarity = util.pytorch_cos_sim(emb1, emb2).item()
+        emb1 = get_embedding(text)
+        emb2 = get_embedding(reference)
+        similarity = cosine_similarity(emb1[0], emb2[0])
+
         # Lower similarity -> higher hallucination risk
         results[model_name] = 1.0 - similarity
     return results
