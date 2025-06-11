@@ -213,7 +213,7 @@ const PerformanceAnalytics: React.FC<PerformanceAnalyticsProps> = ({ onClose }) 
                   </span>
                 </div>
               </div>
-            ))},
+            )}
           </div>
 
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
