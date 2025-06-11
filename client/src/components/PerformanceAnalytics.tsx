@@ -193,23 +193,28 @@ const PerformanceAnalytics: React.FC<PerformanceAnalyticsProps> = ({ onClose }) 
         <div className="flex-1 overflow-y-auto p-6">
           {/* Key Metrics */}
           <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-8">
-            {analyticsData.metricTrends.map((metric, index) => (
-              <div key={index} className="bg-gray-800/40 border border-gray-700/50 rounded-xl p-4">
-                <h3 className="text-sm font-medium text-gray-400 mb-2">{metric.metric}</h3>
-                <div className="flex items-end justify-between">
-                  <span className="text-2xl font-bold text-gray-100">
-                    {typeof metric.current === 'number' && metric.current < 10 
-                      ? metric.current.toFixed(1) 
-                      : metric.current}
-                  </span>
-                  <span className={`text-sm font-medium ${
-                    metric.change.startsWith('+') ? 'text-green-400' : 'text-red-400'
-                  }`}>
-                    {metric.change}
-                  </span>
-                </div>
+            {analyticsData?.metricTrends && (
+              <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-8">
+                {analyticsData.metricTrends.map((metric, index) => (
+                  <div key={index} className="bg-gray-800/40 border border-gray-700/50 rounded-xl p-4">
+                    <h3 className="text-sm font-medium text-gray-400 mb-2">{metric.metric}</h3>
+                    <div className="flex items-end justify-between">
+                      <span className="text-2xl font-bold text-gray-100">
+                        {typeof metric.current === 'number' && metric.current < 10 
+                          ? metric.current.toFixed(1) 
+                          : metric.current}
+                      </span>
+                      <span className={`text-sm font-medium ${
+                        metric.change.startsWith('+') ? 'text-green-400' : 'text-red-400'
+                      }`}>
+                        {metric.change}
+                      </span>
+                    </div>
+                  </div>
+                ))}
               </div>
-            ))}
+            )}
+
           </div>
 
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
