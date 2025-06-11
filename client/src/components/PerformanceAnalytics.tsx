@@ -190,6 +190,7 @@ const PerformanceAnalytics: React.FC<PerformanceAnalyticsProps> = ({ onClose }) 
           )}
         </div>
 
+        return (
         <div className="flex-1 overflow-y-auto p-6">
           {/* Key Metrics */}
           {analyticsData?.metricTrends && (
@@ -199,13 +200,15 @@ const PerformanceAnalytics: React.FC<PerformanceAnalyticsProps> = ({ onClose }) 
                   <h3 className="text-sm font-medium text-gray-400 mb-2">{metric.metric}</h3>
                   <div className="flex items-end justify-between">
                     <span className="text-2xl font-bold text-gray-100">
-                      {typeof metric.current === 'number' && metric.current < 10 
-                        ? metric.current.toFixed(1) 
+                      {typeof metric.current === 'number' && metric.current < 10
+                        ? metric.current.toFixed(1)
                         : metric.current}
                     </span>
-                    <span className={`text-sm font-medium ${
-                      metric.change.startsWith('+') ? 'text-green-400' : 'text-red-400'
-                    }`}>
+                    <span
+                      className={`text-sm font-medium ${
+                        metric.change.startsWith('+') ? 'text-green-400' : 'text-red-400'
+                      }`}
+                    >
                       {metric.change}
                     </span>
                   </div>
@@ -214,6 +217,7 @@ const PerformanceAnalytics: React.FC<PerformanceAnalyticsProps> = ({ onClose }) 
             </div>
           )}
         </div>
+      );
 
 
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
