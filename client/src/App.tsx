@@ -16,7 +16,8 @@ import CIPipeline from './components/CIPipeline';
 import { Evaluation, PromptTemplate } from './types';
 
 const STORAGE_KEY = "llmEvaluations";
-const API_BASE_URL = "http://localhost:8000"; // FastAPI backend URL
+const API_BASE_URL = "https://llm-eval-dashboard-backend.onrender.com";
+
 
 const examplePrompts = [
   "Explain quantum computing in simple terms with real-world applications",
