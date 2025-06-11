@@ -23,10 +23,7 @@ const PerformanceAnalytics: React.FC<PerformanceAnalyticsProps> = ({ onClose }) 
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  const API_BASE_URL =
-  process.env.NODE_ENV === "development"
-    ? "http://localhost:8000"
-    : "https://llm-eval-dashboard-backend.onrender.com";
+ const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
 
 
   // Fetch analytics data from backend
