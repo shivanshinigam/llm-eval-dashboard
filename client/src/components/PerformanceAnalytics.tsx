@@ -141,54 +141,66 @@ const PerformanceAnalytics: React.FC<PerformanceAnalyticsProps> = ({ onClose }) 
   }
 
   return (
-    <div className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4">
-      <div className="bg-gray-900/95 backdrop-blur-xl border border-gray-700/50 rounded-2xl w-full max-w-7xl h-[85vh] flex flex-col shadow-2xl">
-        <div className="p-6 border-b border-gray-700/50">
-          <div className="flex items-center justify-between">
-            <h2 className="text-2xl font-bold text-gray-100 flex items-center gap-2">
-              <TrendingUp className="w-6 h-6 text-green-400" />
-              Mistral Models Performance Analytics
-            </h2>
-            <div className="flex items-center gap-3">
-              <button
-                onClick={fetchAnalyticsData}
-                className="flex items-center gap-2 px-3 py-2 bg-gray-800/60 border border-gray-700/50 rounded-lg text-gray-200 hover:bg-gray-700/60 transition-colors text-sm"
-              >
-                <RefreshCw className="w-4 h-4" />
-                Refresh
-              </button>
-              <select
-                value={timeRange}
-                onChange={(e) => setTimeRange(e.target.value)}
-                className="px-3 py-2 bg-gray-800/60 border border-gray-700/50 rounded-lg text-gray-200 text-sm"
-              >
-                <option value="7d">Last 7 days</option>
-                <option value="30d">Last 30 days</option>
-                <option value="90d">Last 90 days</option>
-              </select>
-              <button
-                onClick={exportData}
-                className="flex items-center gap-2 px-3 py-2 bg-gray-800/60 border border-gray-700/50 rounded-lg text-gray-200 hover:bg-gray-700/60 transition-colors text-sm"
-              >
-                <Download className="w-4 h-4" />
-                Export
-              </button>
-              <button
-                onClick={onClose}
-                className="p-2 hover:bg-gray-800/60 rounded-lg transition-colors text-gray-400 hover:text-white"
-              >
-                ✕
-              </button>
-            </div>
+  <div className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+    <div className="bg-gray-900/95 backdrop-blur-xl border border-gray-700/50 rounded-2xl w-full max-w-7xl h-[85vh] flex flex-col shadow-2xl">
+      {/* Header */}
+      <div className="p-6 border-b border-gray-700/50">
+        <div className="flex items-center justify-between">
+          <h2 className="text-2xl font-bold text-gray-100 flex items-center gap-2">
+            <TrendingUp className="w-6 h-6 text-green-400" />
+            Mistral Models Performance Analytics
+          </h2>
+          <div className="flex items-center gap-3">
+            <button
+              onClick={fetchAnalyticsData}
+              className="flex items-center gap-2 px-3 py-2 bg-gray-800/60 border border-gray-700/50 rounded-lg text-gray-200 hover:bg-gray-700/60 transition-colors text-sm"
+            >
+              <RefreshCw className="w-4 h-4" />
+              Refresh
+            </button>
+            <select
+              value={timeRange}
+              onChange={(e) => setTimeRange(e.target.value)}
+              className="px-3 py-2 bg-gray-800/60 border border-gray-700/50 rounded-lg text-gray-200 text-sm"
+            >
+              <option value="7d">Last 7 days</option>
+              <option value="30d">Last 30 days</option>
+              <option value="90d">Last 90 days</option>
+            </select>
+            <button
+              onClick={exportData}
+              className="flex items-center gap-2 px-3 py-2 bg-gray-800/60 border border-gray-700/50 rounded-lg text-gray-200 hover:bg-gray-700/60 transition-colors text-sm"
+            >
+              <Download className="w-4 h-4" />
+              Export
+            </button>
+            <button
+              onClick={onClose}
+              className="p-2 hover:bg-gray-800/60 rounded-lg transition-colors text-gray-400 hover:text-white"
+            >
+              ✕
+            </button>
           </div>
-          {error && (
-            <div className="mt-3 p-3 bg-yellow-500/20 border border-yellow-500/30 rounded-lg">
-              <p className="text-yellow-300 text-sm">
-                ⚠️ Using mock data - Backend not available: {error}
-              </p>
-            </div>
-          )}
         </div>
+
+        {/* Error Message */}
+        {error && (
+          <div className="mt-3 p-3 bg-yellow-500/20 border border-yellow-500/30 rounded-lg">
+            <p className="text-yellow-300 text-sm">
+              ⚠️ Using mock data - Backend not available: {error}
+            </p>
+          </div>
+        )}
+      </div>
+
+      {/* NOTE: You must follow this with your analytics body */}
+      {/* Example placeholder: */}
+      <div className="flex-1 overflow-y-auto p-6">
+        {/* Insert Performance Charts or Metric Cards Here */}
+      </div>
+    </div>
+  </div>
+);
 
         return (
         <div className="flex-1 overflow-y-auto p-6">
