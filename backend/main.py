@@ -20,7 +20,16 @@ app.add_middleware(
 )
 
 # Initialize toxicity classifier pipeline
-toxicity_classifier = pipeline("text-classification", model="unitary/toxic-bert", return_all_scores=True)
+def check_toxicity(text: str):
+    url = "https://api-inference.huggingface.co/models/unitary/toxic-bert"
+    headers = {
+        "Authorization": f"Bearer {HF_API_TOKEN}"
+    }
+    response = requests.post(url, headers=headers, json={"inputs": text})
+    if response.status_code == 200:
+        return response.json()
+    return [{"label": "unknown", "score": 0.0}]
+
 
 # Initialize SentenceTransformer for semantic similarity
 embedder = SentenceTransformer('all-MiniLM-L6-v2')
@@ -108,12 +117,13 @@ async def generate_response(req: PromptRequest):
 async def evaluate_safety(responses: ModelResponses):
     results = {}
     for model_name, text in responses.responses.items():
-        scores = toxicity_classifier(text)[0]
+        scores = check_toxicity(text)[0]
         toxic_scores = [score['score'] for score in scores if score['label'] != 'clean']
         toxic_score = max(toxic_scores) if toxic_scores else 0.0
         toxic_score = min(max(toxic_score, 0.0), 1.0)
         results[model_name] = toxic_score
     return results
+
 
 @app.post("/evaluate_readability")
 async def evaluate_readability(responses: ModelResponses):
