@@ -196,7 +196,8 @@ const PerformanceAnalytics: React.FC<PerformanceAnalyticsProps> = ({ onClose }) 
         <div className="flex-1 overflow-y-auto p-6">
           {/* Key Metrics */}
           <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-8">
-            {analyticsData.metricTrends.map((metric, index) => (
+            {analyticsData?.metricTrends?.length ? (
+              analyticsData.metricTrends.map((metric, index) => (
               <div key={index} className="bg-gray-800/40 border border-gray-700/50 rounded-xl p-4">
                 <h3 className="text-sm font-medium text-gray-400 mb-2">{metric.metric}</h3>
                 <div className="flex items-end justify-between">
