@@ -217,113 +217,121 @@ const PerformanceAnalytics: React.FC<PerformanceAnalyticsProps> = ({ onClose }) 
 
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
             {/* Performance Trends */}
-            <div className="bg-gray-800/40 border border-gray-700/50 rounded-xl p-6">
-              <h3 className="text-lg font-semibold text-gray-200 mb-4">Mistral Models Performance Trends</h3>
-              <ResponsiveContainer width="100%" height={300}>
-                <LineChart data={analyticsData.performanceData}>
-                  <CartesianGrid strokeDasharray="3 3" stroke="#374151" />
-                  <XAxis 
-                    dataKey="date" 
-                    stroke="#9CA3AF"
-                    fontSize={12}
-                    tickFormatter={(value) => format(new Date(value), 'MMM dd')}
-                  />
-                  <YAxis stroke="#9CA3AF" fontSize={12} domain={[3.5, 5.0]} />
-                  <Tooltip 
-                    contentStyle={{ 
-                      backgroundColor: '#1F2937', 
-                      border: '1px solid #374151',
-                      borderRadius: '8px',
-                      color: '#F9FAFB'
-                    }}
-                  />
-                  <Line type="monotone" dataKey="Mistral 7B Instruct v0.3" stroke="#3B82F6" strokeWidth={2} />
-                  <Line type="monotone" dataKey="Mistral NeMo Instruct" stroke="#10B981" strokeWidth={2} />
-                  <Line type="monotone" dataKey="Mistral Small 3.1 24B Instruct" stroke="#F59E0B" strokeWidth={2} />
-                </LineChart>
-              </ResponsiveContainer>
-            </div>
+            {analyticsData?.performanceData && (
+              <div className="bg-gray-800/40 border border-gray-700/50 rounded-xl p-6">
+                <h3 className="text-lg font-semibold text-gray-200 mb-4">Mistral Models Performance Trends</h3>
+                <ResponsiveContainer width="100%" height={300}>
+                  <LineChart data={analyticsData.performanceData}>
+                    <CartesianGrid strokeDasharray="3 3" stroke="#374151" />
+                    <XAxis 
+                      dataKey="date" 
+                      stroke="#9CA3AF"
+                      fontSize={12}
+                      tickFormatter={(value) => format(new Date(value), 'MMM dd')}
+                    />
+                    <YAxis stroke="#9CA3AF" fontSize={12} domain={[3.5, 5.0]} />
+                    <Tooltip 
+                      contentStyle={{ 
+                        backgroundColor: '#1F2937', 
+                        border: '1px solid #374151',
+                        borderRadius: '8px',
+                        color: '#F9FAFB'
+                      }}
+                    />
+                    <Line type="monotone" dataKey="Mistral 7B Instruct v0.3" stroke="#3B82F6" strokeWidth={2} />
+                    <Line type="monotone" dataKey="Mistral NeMo Instruct" stroke="#10B981" strokeWidth={2} />
+                    <Line type="monotone" dataKey="Mistral Small 3.1 24B Instruct" stroke="#F59E0B" strokeWidth={2} />
+                  </LineChart>
+                </ResponsiveContainer>
+              </div>
+            )}
 
             {/* Model Usage Distribution */}
-            <div className="bg-gray-800/40 border border-gray-700/50 rounded-xl p-6">
-              <h3 className="text-lg font-semibold text-gray-200 mb-4">Model Usage Distribution</h3>
-              <ResponsiveContainer width="100%" height={300}>
-                <PieChart>
-                  <Pie
-                    data={analyticsData.modelUsageData}
-                    cx="50%"
-                    cy="50%"
-                    outerRadius={100}
-                    fill="#8884d8"
-                    dataKey="value"
-                    label={({ name, percent }) => `${name.split(' ')[1]} ${(percent * 100).toFixed(0)}%`}
-                  >
-                    {analyticsData.modelUsageData.map((entry, index) => (
-                      <Cell key={`cell-${index}`} fill={entry.color} />
-                    ))}
-                  </Pie>
-                  <Tooltip 
-                    contentStyle={{ 
-                      backgroundColor: '#1F2937', 
-                      border: '1px solid #374151',
-                      borderRadius: '8px',
-                      color: '#F9FAFB'
-                    }}
-                  />
-                </PieChart>
-              </ResponsiveContainer>
-            </div>
+            {analyticsData?.modelUsageData && (
+              <div className="bg-gray-800/40 border border-gray-700/50 rounded-xl p-6">
+                <h3 className="text-lg font-semibold text-gray-200 mb-4">Model Usage Distribution</h3>
+                <ResponsiveContainer width="100%" height={300}>
+                  <PieChart>
+                    <Pie
+                      data={analyticsData.modelUsageData}
+                      cx="50%"
+                      cy="50%"
+                      outerRadius={100}
+                      fill="#8884d8"
+                      dataKey="value"
+                      label={({ name, percent }) => `${name.split(' ')[1]} ${(percent * 100).toFixed(0)}%`}
+                    >
+                      {analyticsData.modelUsageData.map((entry, index) => (
+                        <Cell key={`cell-${index}`} fill={entry.color} />
+                      ))}
+                    </Pie>
+                    <Tooltip 
+                      contentStyle={{ 
+                        backgroundColor: '#1F2937', 
+                        border: '1px solid #374151',
+                        borderRadius: '8px',
+                        color: '#F9FAFB'
+                      }}
+                    />
+                  </PieChart>
+                </ResponsiveContainer>
+              </div>
+            )}
 
             {/* Response Time Analysis */}
-            <div className="bg-gray-800/40 border border-gray-700/50 rounded-xl p-6">
-              <h3 className="text-lg font-semibold text-gray-200 mb-4">Average Response Time (seconds)</h3>
-              <ResponsiveContainer width="100%" height={300}>
-                <BarChart data={analyticsData.responseTimeData}>
-                  <CartesianGrid strokeDasharray="3 3" stroke="#374151" />
-                  <XAxis 
-                    dataKey="model" 
-                    stroke="#9CA3AF" 
-                    fontSize={12}
-                    tickFormatter={(value) => value.split(' ')[1]} // Show only model variant
-                  />
-                  <YAxis stroke="#9CA3AF" fontSize={12} />
-                  <Tooltip 
-                    contentStyle={{ 
-                      backgroundColor: '#1F2937', 
-                      border: '1px solid #374151',
-                      borderRadius: '8px',
-                      color: '#F9FAFB'
-                    }}
-                  />
-                  <Bar dataKey="time" fill="#3B82F6" radius={[4, 4, 0, 0]} />
-                </BarChart>
-              </ResponsiveContainer>
-            </div>
+            {analyticsData?.responseTimeData && (
+              <div className="bg-gray-800/40 border border-gray-700/50 rounded-xl p-6">
+                <h3 className="text-lg font-semibold text-gray-200 mb-4">Average Response Time (seconds)</h3>
+                <ResponsiveContainer width="100%" height={300}>
+                  <BarChart data={analyticsData.responseTimeData}>
+                    <CartesianGrid strokeDasharray="3 3" stroke="#374151" />
+                    <XAxis 
+                      dataKey="model" 
+                      stroke="#9CA3AF" 
+                      fontSize={12}
+                      tickFormatter={(value) => value.split(' ')[1]} // Show only model variant
+                    />
+                    <YAxis stroke="#9CA3AF" fontSize={12} />
+                    <Tooltip 
+                      contentStyle={{ 
+                        backgroundColor: '#1F2937', 
+                        border: '1px solid #374151',
+                        borderRadius: '8px',
+                        color: '#F9FAFB'
+                      }}
+                    />
+                    <Bar dataKey="time" fill="#3B82F6" radius={[4, 4, 0, 0]} />
+                  </BarChart>
+                </ResponsiveContainer>
+              </div>
+            )}
 
             {/* Safety Scores */}
-            <div className="bg-gray-800/40 border border-gray-700/50 rounded-xl p-6">
-              <h3 className="text-lg font-semibold text-gray-200 mb-4">Safety Scores</h3>
-              <div className="space-y-4">
-                {analyticsData.safetyScores.map((item, index) => (
-                  <div key={index} className="flex items-center justify-between">
-                    <span className="text-gray-300 font-medium">
-                      {item.model.split(' ')[1]} {/* Show only model variant */}
-                    </span>
-                    <div className="flex items-center gap-3">
-                      <div className="w-32 bg-gray-700 rounded-full h-2">
-                        <div 
-                          className="bg-green-400 h-2 rounded-full transition-all duration-500"
-                          style={{ width: `${item.score * 100}%` }}
-                        ></div>
-                      </div>
-                      <span className="text-green-400 font-medium text-sm w-12">
-                        {(item.score * 100).toFixed(0)}%
+            {analyticsData?.safetyScores && (
+              <div className="bg-gray-800/40 border border-gray-700/50 rounded-xl p-6">
+                <h3 className="text-lg font-semibold text-gray-200 mb-4">Safety Scores</h3>
+                <div className="space-y-4">
+                  {analyticsData.safetyScores.map((item, index) => (
+                    <div key={index} className="flex items-center justify-between">
+                      <span className="text-gray-300 font-medium">
+                        {item.model.split(' ')[1]} {/* Show only model variant */}
                       </span>
+                      <div className="flex items-center gap-3">
+                        <div className="w-32 bg-gray-700 rounded-full h-2">
+                          <div 
+                            className="bg-green-400 h-2 rounded-full transition-all duration-500"
+                            style={{ width: `${item.score * 100}%` }}
+                          ></div>
+                        </div>
+                        <span className="text-green-400 font-medium text-sm w-12">
+                          {(item.score * 100).toFixed(0)}%
+                        </span>
+                      </div>
                     </div>
-                  </div>
-                ))}
+                  ))}
+                </div>
               </div>
-            </div>
+            )}
           </div>
         </div>
       </div>
