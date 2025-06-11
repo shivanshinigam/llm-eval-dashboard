@@ -5,7 +5,7 @@ import requests
 from huggingface_hub import InferenceClient
 from transformers import pipeline
 from typing import Dict
-import textstat # type: ignore
+#import textstat # type: ignore
 #from sentence_transformers import SentenceTransformer, util # type: ignore
 
 app = FastAPI()
